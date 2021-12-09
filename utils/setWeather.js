@@ -96,9 +96,9 @@ const fetchWeather = async (city, lat, lon, id) =>
 
     if(city && (!lat || !lon) && !id)
     {
-        const weather = await fetch(`https://astro-weather-api.herokuapp.com/weather?name=${city}`,
+        const weather = await fetch(`https://my-api.com/weather?name=${city}`,
         {credentials: "include", 
-        headers: {"Access-Control-Allow-Origin": "https://astro-weather-api.herokuapp.com"}})
+        headers: {"Access-Control-Allow-Origin": "https://my-api.com"}})
         .then(async (res) => 
         {return await res.json().then((data) => {return data;})})
         .catch((err) => 
@@ -127,9 +127,9 @@ const fetchWeather = async (city, lat, lon, id) =>
     }
     else if(!city && lat && lon)
     {
-        const weather = await fetch(`https://astro-weather-api.herokuapp.com/weather?lat=${lat}&lon=${lon}`,
+        const weather = await fetch(`https://my-api.com/weather?lat=${lat}&lon=${lon}`,
         {credentials: "include", 
-        headers: {"Access-Control-Allow-Origin": "https://astro-weather-api.herokuapp.com"}})
+        headers: {"Access-Control-Allow-Origin": "https://my-api.com"}})
         .then(async (res) => 
         {return await res.json().then((data) => {return data;})})
         .catch((err) => 
@@ -245,9 +245,9 @@ document.getElementById("search-input").addEventListener("input", async (e) =>
 
     if(e.target.value.length > 3)
     {
-        const cities = await fetch(`https://astro-weather-api.herokuapp.com/cities?name=${e.target.value}`,
+        const cities = await fetch(`https://my-api.com/cities?name=${e.target.value}`,
         {credentials: "include", 
-        headers: {"Access-Control-Allow-Origin": "https://astro-weather-api.herokuapp.com"}})
+        headers: {"Access-Control-Allow-Origin": "https://my-api.com"}})
         .then(async (res) => 
         {return await res.json().then((data) =>
         {   
