@@ -100,9 +100,9 @@ const fetchWeather = async (city, lat, lon, id) =>
 
     if(city && (!lat || !lon) && !id)
     {
-        const weather = await fetch(`https://my-api.com/weather?name=${city}`,
+        const weather = await fetch(`https://astro-weather-api.herokuapp.com/weather?name=${city}`,
         {credentials: "include", 
-        headers: {"Access-Control-Allow-Origin": "https://my-api.com"}})
+        headers: {"Access-Control-Allow-Origin": "https://astro-weather-api.herokuapp.com"}})
         .then(async (res) => 
         {return await res.json().then((data) => {return data;})})
         .catch((err) => 
@@ -131,9 +131,9 @@ const fetchWeather = async (city, lat, lon, id) =>
     }
     else if(!city && lat && lon)
     {
-        const weather = await fetch(`https://my-api.com/weather?lat=${lat}&lon=${lon}`,
+        const weather = await fetch(`https://astro-weather-api.herokuapp.com/weather?lat=${lat}&lon=${lon}`,
         {credentials: "include", 
-        headers: {"Access-Control-Allow-Origin": "https://my-api.com"}})
+        headers: {"Access-Control-Allow-Origin": "https://astro-weather-api.herokuapp.com"}})
         .then(async (res) => 
         {return await res.json().then((data) => {return data;})})
         .catch((err) => 
@@ -281,6 +281,19 @@ const getBackground = (localhours, condition = "Clear") =>
     return bg;
 }
 
+const getLocalDay = (date, timezone) =>
+{
+    let localday = date.getUTCDate();
+    let tmz = Math.abs(timezone);
+
+    if((dt.getUTCHours() + (-tmz)) > (dt.getUTCHours() + (tmz)-24))
+    {
+        localday++;
+    }
+
+    return localday;
+}
+
 const showWeather = (weather) =>
 {
     if(weather)
@@ -316,7 +329,7 @@ const showWeather = (weather) =>
         `radial-gradient(${getBackground(getLocalHours(date, weather.timezone), weatherConditions[weather.weather[0].id].name)})`;
         
         document.getElementById("local-time").innerHTML = 
-        `${daysOfWeek[date.getDay()]}, ${date.getDate()} de ${months[date.getMonth()]},
+        `${daysOfWeek[date.getDay()]}, ${getLocalDay(date, weather.timezone)} de ${months[date.getMonth()]},
         ${getLocalHours(date, weather.timezone)}:${date.getMinutes() > 9 ? ""+date.getMinutes() : "0"+date.getMinutes()}`;
 
         updateTime(weather.timezone);
@@ -365,9 +378,9 @@ document.getElementById("search-input").addEventListener("input", async (e) =>
 
     if(e.target.value.length > 3)
     {
-        const cities = await fetch(`https://my-api.com/cities?name=${e.target.value}`,
+        const cities = await fetch(`https://astro-weather-api.herokuapp.com/cities?name=${e.target.value}`,
         {credentials: "include", 
-        headers: {"Access-Control-Allow-Origin": "https://my-api.com"}})
+        headers: {"Access-Control-Allow-Origin": "https://astro-weather-api.herokuapp.com"}})
         .then(async (res) => 
         {return await res.json().then((data) =>
         {   
