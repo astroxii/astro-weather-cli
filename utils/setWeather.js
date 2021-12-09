@@ -2,64 +2,68 @@ localStorage.getItem("TempUnit") === "Celsius" || "Fahrenheit" ? null : localSto
 
 const weatherConditions = 
 {
-    200: {name: "Thunderstorm", img: "./images/heavyrain.png", bg: "./images/thunder_background.jpg"},
-    201: {name: "Thunderstorm", img: "./images/heavyrain.png", bg: "./images/thunder_background.jpg"},
-    202: {name: "Thunderstorm", img: "./images/heavyrain.png", bg: "./images/thunder_background.jpg"},
-    210: {name: "Thunderstorm", img: "./images/thunder.png", bg: "./images/thunder_background.jpg"},
-    211: {name: "Thunderstorm", img: "./images/heavyrain.png", bg: "./images/thunder_background.jpg"},
-    212: {name: "Thunderstorm", img: "./images/heavyrain.png", bg: "./images/thunder_background.jpg"},
-    221: {name: "Thunderstorm", img: "./images/thunder.png", bg: "./images/thunder_background.jpg"},
-    230: {name: "Thunderstorm", img: "./images/heavyrain.png", bg: "./images/thunder_background.jpg"},
-    231: {name: "Thunderstorm", img: "./images/heavyrain.png", bg: "./images/thunder_background.jpg"},
-    232: {name: "Thunderstorm", img: "./images/heavyrain.png", bg: "./images/thunder_background.jpg"},
-    300: {name: "Drizzle", img: "./images/modrain.png", bg: "./images/cloudy_background.jpg"},
-    301: {name: "Drizzle", img: "./images/modrain.png", bg: "./images/rain_background.jpg"},
-    302: {name: "Drizzle", img: "./images/modrain.png", bg: "./images/rain_background.jpg"},
-    310: {name: "Drizzle", img: "./images/modrain.png", bg: "./images/rain_background.jpg"},
-    311: {name: "Drizzle", img: "./images/modrain.png", bg: "./images/rain_background.jpg"},
-    312: {name: "Drizzle", img: "./images/modrain.png", bg: "./images/rain_background.jpg"},
-    313: {name: "Drizzle", img: "./images/modrain.png", bg: "./images/rain_background.jpg"},
-    314: {name: "Drizzle", img: "./images/heavyrain.png", bg: "./images/rain_background.jpg"},
-    321: {name: "Drizzle", img: "./images/modrain.png", bg: "./images/rain_background.jpg"},
-    500: {name: "Rain", img: new Date().getHours() >= 19 || new Date().getHours() <= 4 ? "./images/modrain.png" : "./images/lightrain.png", bg: "./images/rain_background.jpg"},
-    501: {name: "Rain", img: new Date().getHours() >= 19 || new Date().getHours() <= 4 ? "./images/modrain.png" : "./images/lightrain.png", bg: "./images/rain_background.jpg"},
-    502: {name: "Rain", img: "./images/modrain.png", bg: "./images/rain_background.jpg"},
-    503: {name: "Rain", img: "./images/modrain.png", bg: "./images/rain_background.jpg"},
-    504: {name: "Rain", img: "./images/modrain.png", bg: "./images/rain_background.jpg"},
-    511: {name: "Rain", img: "./images/heavyrain.png", bg: "./images/rain_background.jpg"},
-    520: {name: "Rain", img: "./images/heavyrain.png", bg: "./images/rain_background.jpg"},
-    521: {name: "Rain", img: "./images/heavyrain.png", bg: "./images/rain_background.jpg"},
-    522: {name: "Rain", img: "./images/heavyrain.png", bg: "./images/thunder_background.jpg"},
-    531: {name: "Rain", img: "./images/heavyrain.png", bg: "./images/thunder_background.jpg"},
-    600: {name: "Snow", img: "./images/snow.png", bg: "./images/snow_background.jpg"},
-    601: {name: "Snow", img: "./images/snow.png", bg: "./images/snow_background.jpg"},
-    602: {name: "Snow", img: "./images/snow.png", bg: "./images/snow_background.jpg"},
-    611: {name: "Snow", img: "./images/snow.png", bg: "./images/snow_background.jpg"},
-    612: {name: "Snow", img: "./images/snow.png", bg: "./images/snow_background.jpg"},
-    613: {name: "Snow", img: "./images/snow.png", bg: "./images/snow_background.jpg"},
-    615: {name: "Snow", img: "./images/snow.png", bg: "./images/snow_background.jpg"},
-    616: {name: "Snow", img: "./images/snow.png", bg: "./images/snow_background.jpg"},
-    620: {name: "Snow", img: "./images/snow.png", bg: "./images/snow_background.jpg"},
-    621: {name: "Snow", img: "./images/snow.png", bg: "./images/snow_background.jpg"},
-    622: {name: "Snow", img: "./images/snow.png", bg: "./images/snow_background.jpg"},
-    701: {name: "Mist", img: "./images/mist.png", bg: "./images/mist_background.jpg"},
-    711: {name: "Smoke", img: "./images/mist.png", bg: "./images/mist_background.jpg"},
-    721: {name: "Haze", img: "./images/mist.png", bg: "./images/mist_background.jpg"},
-    731: {name: "Dust", img: "./images/mist.png", bg: "./images/mist_background.jpg"},
-    741: {name: "Fog", img: "./images/mist.png", bg: "./images/mist_background.jpg"},
-    751: {name: "Sand", img: "./images/mist.png", bg: "./images/mist_background.jpg"},
-    761: {name: "Dust", img: "./images/mist.png", bg: "./images/mist_background.jpg"},
-    762: {name: "Ash", img: "./images/mist.png", bg: "./images/mist_background.jpg"},
-    771: {name: "Squall", img: "./images/mist.png", bg: "./images/mist_background.jpg"},
-    781: {name: "Tornado", img: "./images/tornado.png", bg: "./images/tornado_background.jpg"},
-    800: {name: "Clear", img: new Date().getHours() >= 19 || new Date().getHours() <= 4 ? "./images/moon.png" : "./images/sun.png", 
-    bg: new Date().getHours() >= 19 || new Date().getHours() <= 4 ? "./images/moon_background.jpg" : "./images/sun_backgroud.jpg"},
-    801: {name: "Clouds", img: new Date().getHours() >= 19 || new Date().getHours() <= 4 ? "./images/cloud1s.png" : "./images/cloud1n.png",
-    bg: new Date().getHours() >= 19 || new Date().getHours() <= 4 ? "./images/moon_background.jpg" : "./images/sun_backgroud.jpg"},
-    802: {name: "Clouds", img: "./images/cloud3.png", bg: "./images/cloudy_background.jpg"},
-    803: {name: "Clouds", img: "./images/cloud4.png", bg: "./images/cloudy_background.jpg"},
-    804: {name: "Clouds", img: "./images/cloud4.png", bg: "./images/cloudy_background.jpg"}
+    200: {name: "Thunderstorm", img: "./images/heavyrain.png"},
+    201: {name: "Thunderstorm", img: "./images/heavyrain.png"},
+    202: {name: "Thunderstorm", img: "./images/heavyrain.png"},
+    210: {name: "Thunderstorm", img: "./images/thunder.png"},
+    211: {name: "Thunderstorm", img: "./images/heavyrain.png"},
+    212: {name: "Thunderstorm", img: "./images/heavyrain.png"},
+    221: {name: "Thunderstorm", img: "./images/thunder.png"},
+    230: {name: "Thunderstorm", img: "./images/heavyrain.png"},
+    231: {name: "Thunderstorm", img: "./images/heavyrain.png"},
+    232: {name: "Thunderstorm", img: "./images/heavyrain.png"},
+    300: {name: "Drizzle", img: "./images/modrain.png"},
+    301: {name: "Drizzle", img: "./images/modrain.png"},
+    302: {name: "Drizzle", img: "./images/modrain.png"},
+    310: {name: "Drizzle", img: "./images/modrain.png"},
+    311: {name: "Drizzle", img: "./images/modrain.png"},
+    312: {name: "Drizzle", img: "./images/modrain.png"},
+    313: {name: "Drizzle", img: "./images/modrain.png"},
+    314: {name: "Drizzle", img: "./images/heavyrain.png"},
+    321: {name: "Drizzle", img: "./images/modrain.png"},
+    500: {name: "Rain", nimg: "./images/modrain.png", dimg: "./images/lightrain.png"},
+    501: {name: "Rain", nimg: "./images/modrain.png", dimg: "./images/lightrain.png"},
+    502: {name: "Rain", img: "./images/modrain.png"},
+    503: {name: "Rain", img: "./images/modrain.png"},
+    504: {name: "Rain", img: "./images/modrain.png"},
+    511: {name: "Rain", img: "./images/heavyrain.png"},
+    520: {name: "Rain", img: "./images/heavyrain.png"},
+    521: {name: "Rain", img: "./images/heavyrain.png"},
+    522: {name: "Rain", img: "./images/heavyrain.png"},
+    531: {name: "Rain", img: "./images/heavyrain.png"},
+    600: {name: "Snow", img: "./images/snow.png"},
+    601: {name: "Snow", img: "./images/snow.png"},
+    602: {name: "Snow", img: "./images/snow.png"},
+    611: {name: "Snow", img: "./images/snow.png"},
+    612: {name: "Snow", img: "./images/snow.png"},
+    613: {name: "Snow", img: "./images/snow.png"},
+    615: {name: "Snow", img: "./images/snow.png"},
+    616: {name: "Snow", img: "./images/snow.png"},
+    620: {name: "Snow", img: "./images/snow.png"},
+    621: {name: "Snow", img: "./images/snow.png"},
+    622: {name: "Snow", img: "./images/snow.png"},
+    701: {name: "Mist", img: "./images/mist.png"},
+    711: {name: "Smoke", img: "./images/mist.png"},
+    721: {name: "Haze", img: "./images/mist.png"},
+    731: {name: "Dust", img: "./images/mist.png"},
+    741: {name: "Fog", img: "./images/mist.png"},
+    751: {name: "Sand", img: "./images/mist.png"},
+    761: {name: "Dust", img: "./images/mist.png"},
+    762: {name: "Ash", img: "./images/mist.png"},
+    771: {name: "Squall", img: "./images/mist.png"},
+    781: {name: "Tornado", img: "./images/tornado.png"},
+    800: {name: "Clear", nimg: "./images/moon.png", dimg: "./images/sun.png"},
+    801: {name: "Clouds", nimg: "./images/cloud1n.png", dimg: "./images/cloud1s.png"},
+    802: {name: "Clouds", img: "./images/cloud3.png"},
+    803: {name: "Clouds", img: "./images/cloud4.png"},
+    804: {name: "Clouds", img: "./images/cloud4.png"}
 }
+
+const daysOfWeek = 
+["Domingo", "Segunda-Feira", "Ter&ccedil;a-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "S&aacute;bado"];
+
+const months = 
+["Janeiro","Fevereiro","Mar&ccedil;o","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 
 const validate = async (i) =>
 {
@@ -167,6 +171,116 @@ const animateSections = () =>
     });
 }
 
+const getLocalHours = (date, timezone) =>
+{
+    const tmzDiff = Math.round(timezone/60/60);
+    let localHours = 0;
+
+    if(date.getUTCHours() + tmzDiff < 24)
+    {
+        localHours = (date.getUTCHours() + tmzDiff) > 9 ? (date.getUTCHours() + tmzDiff) : "0".concat((date.getUTCHours() + tmzDiff));
+    }
+    else
+    {
+        localHours = ((date.getUTCHours() + tmzDiff)-24) > 9 ? 
+        ((date.getUTCHours() + tmzDiff)-24) : 
+        "0".concat(((date.getUTCHours() + tmzDiff)-24));
+    }
+
+    return localHours;
+}
+
+const updateTime = (timezone) =>
+{
+    return setInterval(() =>
+    {
+        const now = new Date();
+
+        if(document.getElementById("local-time").innerHTML !== `${daysOfWeek[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]}, ${getLocalHours(now, timezone)}:${now.getMinutes() > 9 ? ""+now.getMinutes() : "0"+now.getMinutes()}`)
+        {
+            document.getElementById("local-time").innerHTML = 
+            `${daysOfWeek[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]}, ${getLocalHours(now, timezone)}:${now.getMinutes() > 9 ? ""+now.getMinutes() : "0"+now.getMinutes()}`;
+        }
+
+    }, 1000);
+}
+
+const getIcon = (localhours, id) =>
+{
+    let icon = null;
+
+    if(localhours > 6 && localhours < 19)
+    {
+        icon = weatherConditions[id]?.dimg || weatherConditions[id]?.img;
+    }
+    else if(localhours >= 19 || (localhours >= 0 && localhours <= 6))
+    {
+        icon = weatherConditions[id]?.nimg || weatherConditions[id]?.img;
+    }
+
+    return icon;
+}
+
+const getBackground = (localhours, condition = "Clear") =>
+{
+    let bg = null;
+
+    if(localhours > 6 && localhours < 19)
+    {
+        switch(condition)
+        {
+            case "Rain":
+            {
+                bg = "gray, rgb(150,150,150)";
+                break;
+            }
+            case "Clouds":
+            {
+                bg = "cornflowerblue, dodgerblue";
+                break;
+            }
+            case "Clear":
+            {
+                bg = "cornflowerblue, rgb(0, 88, 177)";
+                break;
+            }
+            default:
+            {
+                bg = "cornflowerblue, rgb(0, 88, 177)";
+                break;
+            }
+        }
+    }
+    else if(localhours >= 19 || (localhours >= 0 && localhours <= 6))
+    {
+        switch(condition)
+        {
+            case "Rain":
+            {
+                bg = "rgb(10,10,10), rgb(50,50,50)";
+                break;
+            }
+            case "Clouds":
+            {
+                bg = "rgb(10,10,10), rgb(50,50,50)";
+                break;
+            }
+            case "Clear":
+            {
+                bg = "black, rgb(40,40,40)";
+                break;
+            }
+            default:
+            {
+                bg = "black, rgb(40,40,40)";
+                break;
+            }
+        }
+    }
+
+    return bg;
+}
+
 const showWeather = (weather) =>
 {
     if(weather)
@@ -180,7 +294,7 @@ const showWeather = (weather) =>
         const date = new Date();
 
         document.getElementById("weather-date").innerText = 
-        `Atualizado ${date.getDate() > 9 ? date.getDate() : "0"+date.getDate()}/${date.getMonth()+1 > 9 ? date.getMonth()+1 : "0"+date.getMonth()+1}/${date.getFullYear()}, ${date.getHours() > 10 ? date.getHours() : "0"+date.getHours()}:${date.getMinutes() > 10 ? date.getMinutes() : "0"+date.getMinutes()}.`; // setup counting in localStorage
+        `Atualizado ${date.getDate() > 9 ? date.getDate() : "0"+date.getDate()}/${date.getMonth()+1 > 9 ? date.getMonth()+1 : "0"+date.getMonth()+1}/${date.getFullYear()}, ${date.getHours() > 9 ? date.getHours() : "0"+date.getHours()}:${date.getMinutes() > 9 ? date.getMinutes() : "0"+date.getMinutes()}.`; // setup counting in localStorage
         document.getElementById("city").innerHTML = `${weather.name}, ${weather.sys.country}`;
         document.getElementById("temp").innerHTML = `${weather.main?.temp.toFixed(1)}`;
         document.getElementById("status").innerText = weather.weather[0]?.description
@@ -196,10 +310,16 @@ const showWeather = (weather) =>
         
         document.getElementById("wind-speed").innerText = `${weather.wind.speed}`;
 
-        document.getElementById("weather-icon").src = 
-        weatherConditions[weather.weather[0].id]?.img || weatherConditions[Math.round(weather.weather[0].id/1)-(weather.weather[0].id%10)]?.img;
+        document.getElementById("weather-icon").src = getIcon(getLocalHours(date, weather.timezone), weather.weather[0].id);
+
         document.querySelector("main").style.backgroundImage = 
-        `url(${weatherConditions[weather.weather[0].id]?.bg || "./images/welcome_background.jpg"})`;
+        `radial-gradient(${getBackground(getLocalHours(date, weather.timezone), weatherConditions[weather.weather[0].id].name)})`;
+        
+        document.getElementById("local-time").innerHTML = 
+        `${daysOfWeek[date.getDay()]}, ${date.getDate()} de ${months[date.getMonth()]},
+        ${getLocalHours(date, weather.timezone)}:${date.getMinutes() > 9 ? ""+date.getMinutes() : "0"+date.getMinutes()}`;
+
+        updateTime(weather.timezone);
 
         document.getElementById("loader").animate([{opacity: 1}, {opacity: 0}], {duration: 750})
         .onfinish = () => {document.getElementById("loader").style.display = "none"; animateSections();};
