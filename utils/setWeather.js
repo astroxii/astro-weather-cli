@@ -1,4 +1,4 @@
-localStorage.getItem("TempUnit") === "Celsius" || "Fahrenheit" ? null : localStorage.setItem("TempUnit", "Celsius");
+localStorage.getItem("TempUnit") !== null ? null : localStorage.setItem("TempUnit", "Celsius");
 
 const weatherConditions = 
 {
@@ -12,7 +12,7 @@ const weatherConditions =
     230: {name: "Thunderstorm", img: "./images/heavyrain.png"},
     231: {name: "Thunderstorm", img: "./images/heavyrain.png"},
     232: {name: "Thunderstorm", img: "./images/heavyrain.png"},
-    300: {name: "Drizzle", img: "./images/modrain.png"},
+    300: {name: "Drizzle", nimg: "./images/modrain.png", dimg: "./images/lightrain.png"},
     301: {name: "Drizzle", img: "./images/modrain.png"},
     302: {name: "Drizzle", img: "./images/modrain.png"},
     310: {name: "Drizzle", img: "./images/modrain.png"},
@@ -70,12 +70,12 @@ const validate = async (i) =>
     const vr = /^[a-zA-Z\s,\p{Script=Latin}+]+$/igu;
     const errorBox = document.getElementById("error-message");
 
-    if(i?.value)
+    if(i?.value?.trim())
     {
-        if(vr.test(i?.value))
+        if(vr.test(i?.value?.trim()))
         {   
             document.getElementById("loader").style.display = "flex";
-            await fetchWeather(i?.value?.toLowerCase());
+            await fetchWeather(i?.value?.trim()?.toLowerCase());
         }
         else
         {
@@ -100,9 +100,9 @@ const fetchWeather = async (city, lat, lon, id) =>
 
     if(city && (!lat || !lon) && !id)
     {
-        const weather = await fetch(`https://api.herokuapp.com/weather?name=${city}`,
+        const weather = await fetch(`https://astro-weather-api.herokuapp.com/weather?name=${city}`,
         {credentials: "include", 
-        headers: {"Access-Control-Allow-Origin": "https://api.herokuapp.com"}})
+        headers: {"Access-Control-Allow-Origin": "https://astro-weather-api.herokuapp.com"}})
         .then(async (res) => 
         {return await res.json().then((data) => {return data;})})
         .catch((err) => 
@@ -131,9 +131,9 @@ const fetchWeather = async (city, lat, lon, id) =>
     }
     else if(!city && lat && lon)
     {
-        const weather = await fetch(`https://api.herokuapp.com/weather?lat=${lat}&lon=${lon}`,
+        const weather = await fetch(`https://astro-weather-api.herokuapp.com/weather?lat=${lat}&lon=${lon}`,
         {credentials: "include", 
-        headers: {"Access-Control-Allow-Origin": "https://api.herokuapp.com"}})
+        headers: {"Access-Control-Allow-Origin": "https://astro-weather-api.herokuapp.com"}})
         .then(async (res) => 
         {return await res.json().then((data) => {return data;})})
         .catch((err) => 
@@ -171,49 +171,35 @@ const animateSections = () =>
     });
 }
 
-const getLocalHours = (date, timezone) =>
-{
-    const tmzDiff = Math.round(timezone/60/60);
-    let localHours = 0;
-
-    if(date.getUTCHours() + tmzDiff < 24)
-    {
-        localHours = (date.getUTCHours() + tmzDiff) > 9 ? (date.getUTCHours() + tmzDiff) : "0".concat((date.getUTCHours() + tmzDiff));
-    }
-    else
-    {
-        localHours = ((date.getUTCHours() + tmzDiff)-24) > 9 ? 
-        ((date.getUTCHours() + tmzDiff)-24) : 
-        "0".concat(((date.getUTCHours() + tmzDiff)-24));
-    }
-
-    return localHours;
-}
-
 const updateTime = (timezone) =>
 {
     return setInterval(() =>
     {
         const now = new Date();
+        const localdate = new Date((now.getTime()+(now.getTimezoneOffset()*60*1000))+(timezone*1000));
 
-        if(document.getElementById("local-time").innerHTML !== `${daysOfWeek[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]}, ${getLocalHours(now, timezone)}:${now.getMinutes() > 9 ? ""+now.getMinutes() : "0"+now.getMinutes()}`)
+        if(
+            parseInt(
+            document.getElementById("local-time").innerHTML
+            .substring(document.getElementById("local-time").innerHTML.indexOf(":")+1, 
+            document.getElementById("local-time").innerHTML.indexOf(":")+3)) !== localdate.getMinutes())
         {
             document.getElementById("local-time").innerHTML = 
-            `${daysOfWeek[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]}, ${getLocalHours(now, timezone)}:${now.getMinutes() > 9 ? ""+now.getMinutes() : "0"+now.getMinutes()}`;
+            `${daysOfWeek[localdate.getDay()]}, ${localdate.getDate()} de ${months[localdate.getMonth()]}, ${localdate.getHours() > 9 ? ""+localdate.getHours() : "0"+localdate.getHours()}:${localdate.getMinutes() > 9 ? ""+localdate.getMinutes() : "0"+localdate.getMinutes()}`;
         }
 
     }, 1000);
 }
 
-const getIcon = (localhours, id) =>
+const getIcon = (localSunset, localSunrise, localHours, id) =>
 {
     let icon = null;
 
-    if(localhours > 6 && localhours < 19)
+    if(localHours.getHours() <= localSunset.getHours() && localHours.getHours() >= localSunrise.getHours())
     {
         icon = weatherConditions[id]?.dimg || weatherConditions[id]?.img;
     }
-    else if(localhours >= 19 || (localhours >= 0 && localhours <= 6))
+    else if(localHours.getHours() > localSunset.getHours() || localHours.getHours() < localSunrise.getHours())
     {
         icon = weatherConditions[id]?.nimg || weatherConditions[id]?.img;
     }
@@ -221,90 +207,155 @@ const getIcon = (localhours, id) =>
     return icon;
 }
 
-const getBackground = (localhours, condition = "Clear") =>
+const getBackground = (localSunset, localSunrise, localHours, condition = "Clear") =>
 {
     let bg = null;
+    const conditionDetails = 
+    ["ClearDay", "ClearNight", "CloudyDay", "CloudyNight", "Mist", "Rain", "Snow", "Thunderstorm", "Tornado"];
+    let conditionDetail = 0;
 
-    if(localhours > 6 && localhours < 19)
+    if(localHours.getHours() <= localSunset.getHours() && localHours.getHours() >= localSunrise.getHours())
     {
         switch(condition)
         {
-            case "Rain":
+            case "Drizzle": case "Rain":
             {
-                bg = "gray, rgb(150,150,150)";
+                bg = "rgb(0, 88, 177), rgb(29, 74, 119)";
+                conditionDetail = 5;
+                break;
+            }
+            case "Thunderstorm":
+            {
+                bg = "rgb(0, 88, 177), rgb(29, 74, 119)";
+                conditionDetail = 7;
                 break;
             }
             case "Clouds":
             {
-                bg = "cornflowerblue, dodgerblue";
+                bg = "cornflowerblue, rgb(0, 88, 177)";
+                conditionDetail = 2;
                 break;
             }
             case "Clear":
             {
-                bg = "cornflowerblue, rgb(0, 88, 177)";
+                bg = "cornflowerblue, dodgerblue";
+                conditionDetail = 0;
+                break;
+            }
+            case "Snow":
+            {
+                bg = "rgb(0, 88, 177), rgb(85, 170, 255)";
+                conditionDetail = 6;
+                break;
+            }
+            case "Mist": case "Smoke": case "Fog": case "Sand": case "Dust": case "Ash": case "Squall": case "Haze":
+            {
+                bg = "cornflowerblue, dodgerblue";
+                conditionDetail = 4;
+                break;
+            }
+            case "Tornado":
+            {
+                bg = "gray, rgb(80, 80, 80)";
+                conditionDetail = 8;
                 break;
             }
             default:
             {
-                bg = "cornflowerblue, rgb(0, 88, 177)";
+                bg = "cornflowerblue, dodgerblue";
+                conditionDetail = 0;
                 break;
             }
         }
     }
-    else if(localhours >= 19 || (localhours >= 0 && localhours <= 6))
+    else if(localHours.getHours() > localSunset.getHours() || localHours.getHours() < localSunrise.getHours())
     {
         switch(condition)
         {
-            case "Rain":
+            case "Drizzle": case "Rain":
             {
                 bg = "rgb(10,10,10), rgb(50,50,50)";
+                conditionDetail = 5;
+                break;
+            }
+            case "Thunderstorm":
+            {
+                bg = "rgb(10,10,10), rgb(50,50,50)";
+                conditionDetail = 7;
                 break;
             }
             case "Clouds":
             {
                 bg = "rgb(10,10,10), rgb(50,50,50)";
+                conditionDetail = 3;
                 break;
             }
             case "Clear":
             {
                 bg = "black, rgb(40,40,40)";
+                conditionDetail = 1;
+                break;
+            }
+            case "Snow":
+            {
+                bg = "rgb(30,30,30), rgb(70,70,70)";
+                conditionDetail = 6;
+                break;
+            }
+            case "Mist": case "Smoke": case "Fog": case "Sand": case "Dust": case "Ash": case "Squall": case "Haze":
+            {
+                bg = "black, rgb(40,40,40)";
+                conditionDetail = 4;
+                break;
+            }
+            case "Tornado":
+            {
+                bg = "gray, rgb(80, 80, 80)";
+                conditionDetail = 8;
                 break;
             }
             default:
             {
                 bg = "black, rgb(40,40,40)";
+                conditionDetail = 1;
                 break;
             }
         }
+    }
+
+    if(document.getElementById(conditionDetails[conditionDetail])?.style)
+    {
+        document.getElementById(conditionDetails[conditionDetail]).style.display = "block";
+        document.getElementById(conditionDetails[conditionDetail])
+        .animate([{opacity: 0}, {opacity: 1}], {duration: 2000});
     }
 
     return bg;
 }
-
-const getLocalDay = (date, timezone) =>
-{
-    let localday = date.getUTCDate();
-    let tmz = Math.abs(timezone);
-
-    if((dt.getUTCHours() + (-tmz)) > (dt.getUTCHours() + (tmz)-24))
-    {
-        localday++;
-    }
-
-    return localday;
-}
-
+/*
+document.getElementById("welcome").style.display = "none";
+document.querySelector("main").style.backgroundColor = "rgba(0, 0, 0, 0.4)";
+document.querySelectorAll(".weathers").forEach((ws) => ws.style.display = "flex");
+document.querySelectorAll(".separator").forEach((s) => s.style.display = "flex");
+document.querySelector(".bottom-nav").style.visibility = "visible";
+document.querySelector("main").style.backgroundImage = 
+`radial-gradient(rgb(0, 88, 177), rgb(85, 170, 255))`;
+document.getElementById("ThunderDay").style.display = "block";
+animateSections()
+*/
 const showWeather = (weather) =>
 {
     if(weather)
     {
         document.getElementById("welcome").style.display = "none";
+        document.querySelector("main").style.backgroundColor = "rgba(0, 0, 0, 0.4)";
         document.querySelectorAll(".weathers").forEach((ws) => ws.style.display = "flex");
         document.querySelectorAll(".separator").forEach((s) => s.style.display = "flex");
         document.querySelector(".bottom-nav").style.visibility = "visible";
         localStorage.setItem("TempUnit", "Celsius");
 
         const date = new Date();
+        const localdate = new Date((date.getTime()+(date.getTimezoneOffset()*60*1000))+(weather.timezone*1000));
 
         document.getElementById("weather-date").innerText = 
         `Atualizado ${date.getDate() > 9 ? date.getDate() : "0"+date.getDate()}/${date.getMonth()+1 > 9 ? date.getMonth()+1 : "0"+date.getMonth()+1}/${date.getFullYear()}, ${date.getHours() > 9 ? date.getHours() : "0"+date.getHours()}:${date.getMinutes() > 9 ? date.getMinutes() : "0"+date.getMinutes()}.`; // setup counting in localStorage
@@ -321,16 +372,26 @@ const showWeather = (weather) =>
         document.getElementById("pressure").innerText = `${weather.main.grnd_level || weather.main.pressure}`;
         document.getElementById("visibility").innerText = `${(weather.visibility/1000).toFixed(1)}`;
         
-        document.getElementById("wind-speed").innerText = `${weather.wind.speed}`;
+        document.getElementById("wind-speed").innerText = `${(weather.wind.speed*3.60).toFixed(1)}`;
+        document.getElementById("wind-gust").innerText = `${(weather.wind.gust ? 
+        weather.wind.gust*3.60 : weather.wind.speed*3.60).toFixed(1)}`;
+        document.getElementById("wind-direction").style.transform = `rotate(${weather.wind.deg}deg)`;
 
-        document.getElementById("weather-icon").src = getIcon(getLocalHours(date, weather.timezone), weather.weather[0].id);
+        const sunrise = new Date(((weather.sys.sunrise*1000)+(date.getTimezoneOffset()*60*1000))+(weather.timezone*1000));
+        document.getElementById("sunrise").innerHTML = 
+        `${sunrise.getHours() > 0 ? sunrise.getHours() : "0".concat(sunrise.getHours())}:${sunrise.getMinutes() > 9 ? sunrise.getMinutes() : "0".concat(sunrise.getMinutes())}`;
+        const sunset = new Date(((weather.sys.sunset*1000)+(date.getTimezoneOffset()*60*1000))+(weather.timezone*1000));
+        document.getElementById("sunset").innerHTML = 
+        `${sunset.getHours() > 0 ? sunset.getHours() : "0".concat(sunset.getHours())}:${sunset.getMinutes() > 9 ? sunset.getMinutes() : "0".concat(sunset.getMinutes())}`;
+
+        document.getElementById("weather-icon").src = getIcon(sunset, sunrise, localdate, weather.weather[0].id);
 
         document.querySelector("main").style.backgroundImage = 
-        `radial-gradient(${getBackground(getLocalHours(date, weather.timezone), weatherConditions[weather.weather[0].id].name)})`;
+        `radial-gradient(${getBackground(sunset, sunrise, localdate, weatherConditions[weather.weather[0].id].name)})`;
         
         document.getElementById("local-time").innerHTML = 
-        `${daysOfWeek[date.getDay()]}, ${getLocalDay(date, weather.timezone)} de ${months[date.getMonth()]},
-        ${getLocalHours(date, weather.timezone)}:${date.getMinutes() > 9 ? ""+date.getMinutes() : "0"+date.getMinutes()}`;
+        `${daysOfWeek[localdate.getDay()]}, ${localdate.getDate()} de ${months[localdate.getMonth()]},
+        ${localdate.getHours() > 9 ? ""+localdate.getHours() : "0"+localdate.getHours()}:${localdate.getMinutes() > 9 ? ""+localdate.getMinutes() : "0"+localdate.getMinutes()}`;
 
         updateTime(weather.timezone);
 
@@ -378,9 +439,9 @@ document.getElementById("search-input").addEventListener("input", async (e) =>
 
     if(e.target.value.length > 3)
     {
-        const cities = await fetch(`https://api.herokuapp.com/cities?name=${e.target.value}`,
+        const cities = await fetch(`https://astro-weather-api.herokuapp.com/cities?name=${e.target.value}`,
         {credentials: "include", 
-        headers: {"Access-Control-Allow-Origin": "https://api.herokuapp.com"}})
+        headers: {"Access-Control-Allow-Origin": "https://astro-weather-api.herokuapp.com"}})
         .then(async (res) => 
         {return await res.json().then((data) =>
         {   
