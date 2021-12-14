@@ -342,7 +342,7 @@ document.querySelector("main").style.backgroundImage =
 `radial-gradient(cornflowerblue, dodgerblue)`;
 document.getElementById("ClearDay").style.display = "block";
 animateSections()
-/*
+*/
 const showWeather = (weather) =>
 {
     if(weather)
