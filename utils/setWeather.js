@@ -339,8 +339,8 @@ document.querySelectorAll(".weathers").forEach((ws) => ws.style.display = "flex"
 document.querySelectorAll(".separator").forEach((s) => s.style.display = "flex");
 document.querySelector(".bottom-nav").style.visibility = "visible";
 document.querySelector("main").style.backgroundImage = 
-`radial-gradient(rgb(0, 88, 177), rgb(85, 170, 255))`;
-document.getElementById("ThunderDay").style.display = "block";
+`radial-gradient(cornflowerblue, dodgerblue)`;
+document.getElementById("ClearDay").style.display = "block";
 animateSections()
 */
 const showWeather = (weather) =>

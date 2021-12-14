@@ -433,6 +433,11 @@ header
     z-index: 2;
 }
 
+.convert-button
+{
+    transition: 0.2s ease-in-out;
+}
+
 
 .resume
 {
@@ -504,6 +509,10 @@ header
     background-color: transparent;
     font-size: 15px;
     cursor: pointer;
+}
+.weather-temp .convert-button:hover
+{
+    border-bottom: gray 1px solid;
 }
 .weather-temp img
 {
@@ -607,9 +616,9 @@ header
 {
     height: 32.5px;
     width: 5px;
-    background: linear-gradient(to top, rgb(220, 220, 220) 0%, rgb(220, 220, 220) 70%, rgb(220, 0, 0) 70%, rgb(220, 0, 0) 100%);
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
+    background: linear-gradient(to bottom, rgb(220, 220, 220) 0%, rgb(220, 220, 220) 70%, rgb(220, 0, 0) 70%, rgb(220, 0, 0) 100%);
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -642,6 +651,53 @@ header
     display: none;
     user-select: none;
 }
+
+
+.info
+{
+    border: gray 1px solid;
+    border-radius: 50%;
+    height: 19px;
+    width: 19px;
+    font-family: serif;
+    font-size: 17px;
+    font-weight: normal;
+    color: gray;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: help;
+    margin: auto;
+}
+.info::after
+{
+    content: attr(information);
+    position: absolute;
+    color: white;
+    background-color: #111736;
+    padding: 5px;
+    border-radius: 15px;
+    text-align: justify;
+    font-family: Quicksand, Arial;
+    font-size: 14px;
+    font-weight: lighter;
+    cursor: default;
+    max-width: 210px;
+    margin-left: 255px;
+    visibility: hidden;
+    transform-origin: center;
+    transform: scale(0);
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.4);
+    transition: all 0.2s ease-in-out;
+    z-index: 1;
+}
+.info:hover::after
+{
+    visibility: visible;
+    transform: scale(1);
+}
+
 
 .details
 {
@@ -759,6 +815,15 @@ footer
     color: rgb(180, 0, 180);
 }
 
+@media screen and (min-width: 0) and (max-width: 1290px)
+{
+    .info::after
+    {
+        margin: 0;
+        margin-right: 0;
+        margin-top: 125px;
+    }
+}
 @media screen and (min-width: 0) and (max-width: 950px)
 {
     .home-link h1
@@ -778,6 +843,17 @@ footer
         text-indent: 0;
         font-size: 16px;
         max-width: 100%;
+    }
+    .info::after
+    {
+        font-size: 13px;
+    }
+}
+@media screen and (min-width: 0) and (max-width: 800px)
+{
+    .info
+    {
+        display: none;
     }
 }
 @media screen and (min-width: 0) and (max-width: 600px)
@@ -819,14 +895,9 @@ footer
         font-size: 16px;
         max-width: 99%;
     }
-    .bottom-nav
+    .bottom-nav, .sunglow, .lensflare
     {
         display: none;
-    }
-    .sunglow
-    {
-        top: -100px;
-        right: -100px;
     }
 }
 

@@ -182,7 +182,7 @@
                 <div class="weather-temp">
                     <img alt="" src="./images/thermometer.png"/>
                     <p><span id="temp" class="thermo-value"></span>°<span class="thermo-unit">C</span></p>
-                    <button class="convert-button">°<span class="thermo-unit-c">F</span></button>
+                    <button title="Mudar unidade de medi&ccedil;&atilde;o." class="convert-button">°<span class="thermo-unit-c">F</span></button>
                 </div>
                 <p class="weather-feelslike">Sensa&ccedil;&atilde;o de <span id="feels-like" class="thermo-value"></span>°<span class="thermo-unit">C</span></p>
                 <div class="weather-minmax">
@@ -198,13 +198,18 @@
             <h2 class="section-title">Mais Informa&ccedil;&otilde;es</h2>            
             <article class="section-content">
                 <div class="atmospheric">
-                    <div class="atmos-info"><img alt="" src="./images/humidity.png">Umidade em <span id="humidity"></span>%</div>
-                    <div class="atmos-info"><img alt="" src="./images/pressure.png">Press&atilde;o atmosf&eacute;rica <span id="pressure"></span>hPa</div>
-                    <div class="atmos-info"><img alt="" src="./images/visibility.png">Visibilidade <span id="visibility"></span>km</div>
+                    <div class="atmos-info"><img alt="" src="./images/humidity.png">Umidade em <span id="humidity"></span>%
+                    <span class="info" information="A porcentagem de umidade indica a quantidade atual de vapor de &aacute;gua presente na atmosfera.">i</span></div>
+                    <div class="atmos-info"><img alt="" src="./images/pressure.png">Press&atilde;o Atmosf&eacute;rica <span id="pressure"></span>hPa
+                    <span class="info" information="A Press&atilde;o Atmosf&eacute;rica descreve a press&atilde;o exercida por massas de ar. Medi&ccedil;&otilde;es abaixo de 1013hPa indicam chances de chuva.">i</span></div>
+                    <div class="atmos-info"><img alt="" src="./images/visibility.png">Visibilidade <span id="visibility"></span>km
+                    <span class="info" information="A visibilidade m&aacute;xima, em quil&ocirc;metros, da qual um objeto pode ser observado.">i</span></div>
                 </div>
                 <div class="wind">
-                    <div class="atmos-info"><img alt="" src="./images/wind.png">Vento a <span id="wind-speed"></span>km/h</div>
-                    <div class="atmos-info"><img alt="" src="./images/wind.png">Rajadas a <span id="wind-gust"></span>km/h</div>
+                    <div class="atmos-info"><img alt="" src="./images/wind.png">Vento a <span id="wind-speed"></span>km/h
+                    <span class="info" information="Velocidade do vento comum, expressa em quil&ocirc;metros por hora.">i</span></div>
+                    <div class="atmos-info"><img alt="" src="./images/wind.png">Rajadas a <span id="wind-gust"></span>km/h
+                    <span class="info" information="Velocidade das rajadas s&uacute;bitas de vento, com mais de 18km/h, durando menos de 20 segundos.">i</span></div>
                     <div class="wind-direction">
                         <span id="wind-direction" class="wind-pointer"></span>
                         <span style="margin-bottom: 72.5px;" class="wind-pointer-dir">N</span>
@@ -212,16 +217,17 @@
                         <span style="margin-top: 72.5px;" class="wind-pointer-dir">S</span>
                         <span style="margin-right: 72.5px;" class="wind-pointer-dir">O</span>
                     </div>
+                    <span class="info" information="A dire&ccedil;&atilde;o para qual o vento segue, demonstrada pela seta vermelha.">i</span>
                 </div>
                 <div class="sun">
-                    <div class="sun-info"><img src="./images/sunrise.png"/><p>Alvorada:</p><p id="sunrise"></p></div>
-                    <div class="sun-info"><img src="./images/sunset.png"/><p>Crep&uacute;sculo:</p><p id="sunset"></p></div>
+                    <div class="sun-info"><img src="./images/sunrise.png"/><p>Alvorada</p><p id="sunrise"></p></div>
+                    <div class="sun-info"><img src="./images/sunset.png"/><p>Crep&uacute;sculo</p><p id="sunset"></p></div>
                 </div>
             </article>
         </section>
         <nav class="bottom-nav">
             <ul class="bottom-nav-list">
-                <li><button class="convert-button bottom-convert-button">°<span class="thermo-unit-c">F</span></button></li>
+                <li><button title="Mudar unidade de medi&ccedil;&atilde;o." class="convert-button bottom-convert-button">°<span class="thermo-unit-c">F</span></button></li>
             </ul>
         </nav>
     </main>
