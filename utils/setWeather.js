@@ -342,7 +342,7 @@ document.querySelector("main").style.backgroundImage =
 `radial-gradient(cornflowerblue, dodgerblue)`;
 document.getElementById("ClearDay").style.display = "block";
 animateSections()
-*/
+/*
 const showWeather = (weather) =>
 {
     if(weather)
@@ -371,6 +371,7 @@ const showWeather = (weather) =>
         document.getElementById("humidity").innerText = `${weather.main.humidity}`;
         document.getElementById("pressure").innerText = `${weather.main.grnd_level || weather.main.pressure}`;
         document.getElementById("visibility").innerText = `${(weather.visibility/1000).toFixed(1)}`;
+        document.getElementById("cloudiness").innerText = `${weather.clouds.all}`;
         
         document.getElementById("wind-speed").innerText = `${(weather.wind.speed*3.60).toFixed(1)}`;
         document.getElementById("wind-gust").innerText = `${(weather.wind.gust ? 

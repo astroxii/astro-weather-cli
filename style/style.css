@@ -607,7 +607,7 @@ header
     background-color: transparent;
     border-radius: 50%;
     border: white 1px solid;
-    margin: auto;
+    margin: 10px auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -619,6 +619,7 @@ header
     background: linear-gradient(to bottom, rgb(220, 220, 220) 0%, rgb(220, 220, 220) 70%, rgb(220, 0, 0) 70%, rgb(220, 0, 0) 100%);
     border-bottom-left-radius: 50%;
     border-bottom-right-radius: 50%;
+    border-top: red 1px solid;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -628,6 +629,13 @@ header
     position: absolute;
     font-size: 16px;
     color: white;
+}
+.wind-pointer-line
+{
+    position: absolute;
+    background-color: white;
+    width: 2px;
+    height: 10px;
 }
 
 .sun-info
@@ -675,16 +683,16 @@ header
     content: attr(information);
     position: absolute;
     color: white;
-    background-color: #111736;
+    background-color: rgb(50,50,50);
     padding: 5px;
-    border-radius: 15px;
+    border-radius: 5px;
     text-align: justify;
     font-family: Quicksand, Arial;
     font-size: 14px;
     font-weight: lighter;
     cursor: default;
     max-width: 210px;
-    margin-left: 255px;
+    margin-top: 125px;
     visibility: hidden;
     transform-origin: center;
     transform: scale(0);
@@ -815,15 +823,6 @@ footer
     color: rgb(180, 0, 180);
 }
 
-@media screen and (min-width: 0) and (max-width: 1290px)
-{
-    .info::after
-    {
-        margin: 0;
-        margin-right: 0;
-        margin-top: 125px;
-    }
-}
 @media screen and (min-width: 0) and (max-width: 950px)
 {
     .home-link h1
