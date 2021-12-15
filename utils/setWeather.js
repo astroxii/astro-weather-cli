@@ -100,9 +100,9 @@ const fetchWeather = async (city, lat, lon, id) =>
 
     if(city && (!lat || !lon) && !id)
     {
-        const weather = await fetch(`https://astro-weather-api.herokuapp.com/weather?name=${city}`,
+        const weather = await fetch(`https://astro-weather-apip.herokuapp.com/weather?name=${city}`,
         {credentials: "include", 
-        headers: {"Access-Control-Allow-Origin": "https://astro-weather-api.herokuapp.com"}})
+        headers: {"Access-Control-Allow-Origin": "https://astro-weather-apip.herokuapp.com"}})
         .then(async (res) => 
         {return await res.json().then((data) => {return data;})})
         .catch((err) => 
@@ -131,9 +131,9 @@ const fetchWeather = async (city, lat, lon, id) =>
     }
     else if(!city && lat && lon)
     {
-        const weather = await fetch(`https://astro-weather-api.herokuapp.com/weather?lat=${lat}&lon=${lon}`,
+        const weather = await fetch(`https://astro-weather-apip.herokuapp.com/weather?lat=${lat}&lon=${lon}`,
         {credentials: "include", 
-        headers: {"Access-Control-Allow-Origin": "https://astro-weather-api.herokuapp.com"}})
+        headers: {"Access-Control-Allow-Origin": "https://astro-weather-apip.herokuapp.com"}})
         .then(async (res) => 
         {return await res.json().then((data) => {return data;})})
         .catch((err) => 
