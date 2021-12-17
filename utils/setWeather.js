@@ -75,6 +75,7 @@ const validate = async (i) =>
         if(vr.test(i?.value?.trim()))
         {   
             document.getElementById("loader").style.display = "flex";
+            i.blur();
             await fetchWeather(i?.value?.trim()?.toLowerCase());
         }
         else
